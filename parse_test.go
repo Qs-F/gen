@@ -10,8 +10,8 @@ func TestParse(t *testing.T) {
 	tests := []struct {
 		Input string
 
-		Content     []byte
-		FrontMatter map[string]interface{}
+		Content   []byte
+		Variables Variables
 	}{
 		{
 			Input: `---
@@ -23,7 +23,7 @@ hello: Gopher
 			Content: []byte(`# test doc
 あいうえお😄
 `),
-			FrontMatter: map[string]interface{}{
+			Variables: Variables{
 				"hello": "Gopher",
 			},
 		},
@@ -34,8 +34,8 @@ hello: Gopher
 		if err != nil {
 			t.Error(err)
 		}
-		if !bytes.Equal(c, test.Content) || !reflect.DeepEqual(fm, test.FrontMatter) {
-			t.Errorf("want c: %s\n\nfm: %s\n but got c: %s\n\nfm: %s\n", test.Content, test.FrontMatter, c, fm)
+		if !bytes.Equal(c, test.Content) || !reflect.DeepEqual(fm, test.Variables) {
+			t.Errorf("want c: %s\n\nfm: %s\n but got c: %s\n\nfm: %s\n", test.Content, test.Variables, c, fm)
 		} else {
 			t.Logf("got c: %s\n\nfm: %s\n", c, fm)
 		}
