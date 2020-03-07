@@ -31,6 +31,17 @@ func (fm Variables) ContainsImports() bool {
 	return true
 }
 
+func (v Variables) ToImports() []string {
+	if !v.ContainsImports() {
+		return []string{}
+	}
+
+	// by v.ContainsImports, it is gualanteed to have ImportDelim key in v
+	ret, _ := v[ImportDelim].([]string)
+
+	return ret
+}
+
 type List map[string]Variables
 
 type Node struct {
