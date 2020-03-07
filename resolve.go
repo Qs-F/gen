@@ -10,7 +10,8 @@ const (
 )
 
 var (
-	ErrRootNotFound = errors.New("Root is not found")
+	ErrRootNotFound     = errors.New("Root is not found")
+	ErrVariableNotFound = errors.New("No such variable ident")
 )
 
 func (fm Variables) ContainsImports() bool {
