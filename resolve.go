@@ -44,6 +44,14 @@ func (v Variables) ToImports() []string {
 
 type List map[string]Variables
 
+func (list List) Get(key string) (Variables, error) {
+	v, ok := list[key]
+	if !ok {
+		return nil, ErrVariableNotFound
+	}
+	return v, nil
+}
+
 type Node struct {
 	Parent  *Node
 	Childen []*Node
