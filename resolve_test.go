@@ -46,6 +46,16 @@ func TestResolve(t *testing.T) {
 		{
 			Input: map[string]Variables{
 				"_": Variables{
+					"test": "Gopher OK",
+				},
+			},
+			Output: Variables{
+				"test": "Gopher OK",
+			},
+		},
+		{
+			Input: map[string]Variables{
+				"_": Variables{
 					"import": []string{"A", "B"},
 				},
 				"A": Variables{
@@ -59,6 +69,23 @@ func TestResolve(t *testing.T) {
 				"test": "Gopher A",
 			},
 		},
+		{
+			Input: map[string]Variables{
+				"_": Variables{
+					"import": []string{"A", "B"},
+					"test":   "Gopher X",
+				},
+				"A": Variables{
+					"test": "Gopher A",
+				},
+				"B": Variables{
+					"test": "Gopher B",
+				},
+			},
+			Output: Variables{
+				"test": "Gopher X",
+			},
+		},
 	}
 
 	for _, test := range tests {
@@ -67,7 +94,7 @@ func TestResolve(t *testing.T) {
 		} else if !reflect.DeepEqual(r, test.Output) {
 			t.Errorf("want %s\nbut got %s\nfor %s\n", spew.Sdump(test.Output), spew.Sdump(r), spew.Sdump(test.Input))
 		} else {
-			t.Errorf("got %s\nfor %s\n", spew.Sdump(r), spew.Sdump(test.Input))
+			t.Logf("got %s\nfor %s\n", spew.Sdump(r), spew.Sdump(test.Input))
 		}
 	}
 }
