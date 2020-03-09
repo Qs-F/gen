@@ -16,3 +16,21 @@ func Parse(p []byte) (content []byte, frontmatter Variables, err error) {
 	frontmatter = cfm.FrontMatter
 	return
 }
+
+type Markdown struct{}
+
+func (_ *Markdown) Ext() string {
+	return ".md"
+}
+
+func (_ *Markdown) Load(p []byte) (Variables, error) {
+	_, fm, err := Parse(p)
+	if err != nil {
+		return nil, err
+	}
+	return fm, nil
+}
+
+func NewMarkdownLoader() *Markdown {
+	return &Markdown{}
+}
