@@ -5,12 +5,16 @@ import (
 )
 
 const (
+	// ImportDelim is import directive delimiter
 	ImportDelim = "import"
-	Root        = "_"
+	// Root is the List key for root, starting point of resolving
+	Root = "_"
 )
 
 var (
-	ErrRootNotFound     = errors.New("Root is not found")
+	// ErrRootNotFound is returned when root is not found
+	ErrRootNotFound = errors.New("Root is not found")
+	// ErrVariableNotFound is returned when variable is not found
 	ErrVariableNotFound = errors.New("No such variable ident")
 )
 
@@ -18,10 +22,13 @@ var (
 // map key is the key to access Variable
 type List map[string]Variables
 
+// Resolve resolves th given list into Variables aling with the key "_"
+// Internally, this uses ResolveKey with key = Root
 func Resolve(list List) (Variables, error) {
 	return ResolveKey(list, Root)
 }
 
+// ResolveKey resolves the given list into Variables along with the given key as root.
 func ResolveKey(list List, key string) (Variables, error) {
 	v, err := list.Get(key)
 	if err != nil {
