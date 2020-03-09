@@ -8,6 +8,10 @@ Variable resolve -> text/template expansion to markdown content -> blackfriday c
 
 ## Default values
 
-- import directive
+- `import` directive
 
 in front matter, you can import other markdown
+
+- `Content` directive
+
+markdown content string is put in Content
