@@ -64,3 +64,23 @@ func (gen *Gen) List(loaders ...Loader) (List, error) {
 	}
 	return list, nil
 }
+
+func main() {
+	wd, err := os.Getwd()
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+	gen := New(wd, "")
+	list, err := gen.List(NewMarkdownLoader())
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+	v, err := ResolveKey(list, "testdata/md/basic.md")
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+	spew.Dump(v)
+}
