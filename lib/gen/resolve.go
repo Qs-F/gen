@@ -1,4 +1,4 @@
-package main
+package gen
 
 import (
 	"errors"
@@ -97,7 +97,6 @@ func (v Variables) ToNode(key string, parent *Node) *Node {
 		Key:      key,
 		Content:  v,
 		Deps:     v.ToImports(),
-		parent:   parent,
 		children: []*Node{},
 		resolved: false,
 	}
@@ -129,7 +128,6 @@ type imported map[string]bool
 
 // Depth is nodes slice for the same depth.
 type Depth struct {
-	Depth int
 	Nodes []*Node
 }
 
@@ -156,7 +154,6 @@ func resolve(list List, im imported, depth *Depth) *Depth {
 	}
 
 	return &Depth{
-		Depth: depth.Depth + 1,
 		Nodes: nodes,
 	}
 }
@@ -167,7 +164,6 @@ type Tree []*Depth
 func (list List) GenTree(root *Node) Tree {
 	im := make(imported)
 	zeroDepth := &Depth{
-		Depth: 0,
 		Nodes: []*Node{root},
 	}
 

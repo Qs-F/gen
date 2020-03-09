@@ -1,12 +1,10 @@
-package main
+// Package gen is the packeg of internal gen
+package gen
 
 import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-
-	"github.com/davecgh/go-spew/spew"
-	"github.com/sirupsen/logrus"
 )
 
 // Variables is the type expressing front matters
@@ -63,24 +61,4 @@ func (gen *Gen) List(loaders ...Loader) (List, error) {
 		return nil, err
 	}
 	return list, nil
-}
-
-func main() {
-	wd, err := os.Getwd()
-	if err != nil {
-		logrus.Error(err)
-		return
-	}
-	gen := New(wd, "")
-	list, err := gen.List(NewMarkdownLoader())
-	if err != nil {
-		logrus.Error(err)
-		return
-	}
-	v, err := ResolveKey(list, "testdata/md/basic.md")
-	if err != nil {
-		logrus.Error(err)
-		return
-	}
-	spew.Dump(v)
 }
