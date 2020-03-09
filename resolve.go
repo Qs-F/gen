@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	// ImportDelim is import directive delimiter
-	ImportDelim = "import"
+	// ImportIdent is import directive identifier
+	ImportIdent = "import"
 	// Root is the List key for root, starting point of resolving
 	Root = "_"
 )
@@ -55,7 +55,7 @@ func (v Variables) ContainsImports() bool {
 		return false
 	}
 
-	im, ok := v[ImportDelim]
+	im, ok := v[ImportIdent]
 	if !ok {
 		return false
 	}
@@ -75,7 +75,7 @@ func (v Variables) ToImports() []string {
 	}
 
 	// by v.ContainsImports, it is gualanteed to have ImportDelim key in v
-	ret, _ := v[ImportDelim].([]string)
+	ret, _ := v[ImportIdent].([]string)
 	return ret
 }
 
@@ -190,7 +190,7 @@ func (tree Tree) Reduce() Variables {
 	for _, depth := range tree {
 		for _, node := range depth.Nodes {
 			for k, v := range node.Content {
-				if k == ImportDelim {
+				if k == ImportIdent {
 					continue
 				}
 				if _, ok := variables[k]; ok {
