@@ -8,4 +8,4 @@ import:
 
 ## this article is for test
 
-{{ .committers.fumy }} wrote.
+{{ .committers.gopher }} wrote.

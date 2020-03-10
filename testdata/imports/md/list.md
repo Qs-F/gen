@@ -1,4 +1,4 @@
 ---
 committers:
-  fumy: Fumy T
+  gopher: Gopher Google
 ---
