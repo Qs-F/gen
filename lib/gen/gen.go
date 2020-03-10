@@ -35,9 +35,10 @@ type Loader interface {
 	Load(p []byte) (Variables, error)
 }
 
-func (gen *Gen) List(loaders ...Loader) (List, error) {
+// List makes list from given directory.
+func GenList(basePath string, loaders ...Loader) (List, error) {
 	list := make(List)
-	err := filepath.Walk(gen.BasePath, func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(basePath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -57,7 +58,7 @@ func (gen *Gen) List(loaders ...Loader) (List, error) {
 			if err != nil {
 				return err
 			}
-			key, err := filepath.Rel(gen.BasePath, path)
+			key, err := filepath.Rel(basePath, path)
 			if err != nil {
 				return err
 			}
