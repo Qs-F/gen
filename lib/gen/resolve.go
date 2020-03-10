@@ -60,11 +60,14 @@ func (v Variables) ContainsImports() bool {
 		return false
 	}
 
-	if _, ok := im.([]string); !ok {
+	switch im.(type) {
+	case []string:
+		return true
+	case []interface{}:
+		return true
+	default:
 		return false
 	}
-
-	return true
 }
 
 // ToImports resolve Variable into import keys.
@@ -75,8 +78,18 @@ func (v Variables) ToImports() []string {
 	}
 
 	// by v.ContainsImports, it is gualanteed to have ImportDelim key in v
-	ret, _ := v[ImportIdent].([]string)
-	return ret
+	switch t := v[ImportIdent].(type) {
+	case []interface{}:
+		ret := make([]string, len(t), cap(t))
+		for i, v := range t {
+			ret[i] = v.(string)
+		}
+		return ret
+	case []string:
+		return t
+	default:
+		return []string{}
+	}
 }
 
 // Node is the deps tree node.
