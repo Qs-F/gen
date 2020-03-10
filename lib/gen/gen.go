@@ -10,11 +10,13 @@ import (
 // Variables is the type expressing front matters
 type Variables map[string]interface{}
 
+// Gen is the struct for gen cmd
 type Gen struct {
 	BasePath   string
 	LayoutPath string
 }
 
+// New returns new *Gen
 func New(basePath string, layoutPath string) *Gen {
 	return &Gen{
 		BasePath:   basePath,
@@ -22,6 +24,12 @@ func New(basePath string, layoutPath string) *Gen {
 	}
 }
 
+// Loader is the interface that provides the way to get Variables from document.
+//
+// Ext returns file extension, e.g. md, html.
+// If the given file is matched to this, then the loader will be used to resolve.
+//
+// Load is the function to get Variables from document.
 type Loader interface {
 	Ext() string
 	Load(p []byte) (Variables, error)
