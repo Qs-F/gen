@@ -27,6 +27,14 @@ func TestContainsImports(t *testing.T) {
 			},
 			Result: false,
 		},
+		{
+			Input: Variables{
+				"import": []interface{}{
+					"doc/doc/doc.md",
+				},
+			},
+			Result: true,
+		},
 	}
 
 	for _, test := range tests {
