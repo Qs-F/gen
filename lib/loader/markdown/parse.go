@@ -1,3 +1,4 @@
+// Package markdown is the loader of markdown
 package markdown
 
 import (
@@ -9,16 +10,20 @@ import (
 
 const ext = ".md"
 
+// Markdown is the type of markdown loader
 type Markdown struct{}
 
-func NewMarkdownLoader() *Markdown {
+// New returns new instance of Markdown
+func New() *Markdown {
 	return &Markdown{}
 }
 
+// Ext implements gen.Loader
 func (_ *Markdown) Ext() string {
 	return ext
 }
 
+// Load implements gen.Loader
 func (_ *Markdown) Load(p []byte) (gen.Variables, error) {
 	var v gen.Variables
 	cfm, err := pageparser.ParseFrontMatterAndContent(bytes.NewReader(p))

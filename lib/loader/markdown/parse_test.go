@@ -8,7 +8,7 @@ import (
 )
 
 func TestLoad(t *testing.T) {
-	m := NewMarkdownLoader()
+	m := New()
 
 	tests := []struct {
 		Input string
