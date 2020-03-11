@@ -20,7 +20,7 @@ func TestGenList(t *testing.T) {
 	}{
 		{
 			Path:    filepath.Join(base, "imports", "md"),
-			Loaders: []gen.Loader{markdown.NewMarkdownLoader()},
+			Loaders: []gen.Loader{markdown.New()},
 			Root:    "index.md",
 
 			Output: gen.List{
