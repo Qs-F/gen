@@ -7,10 +7,6 @@ import (
 	"github.com/gohugoio/hugo/parser/pageparser"
 )
 
-const (
-	ContentIdent = "Content"
-)
-
 const ext = ".md"
 
 type Markdown struct{}
@@ -30,6 +26,6 @@ func (_ *Markdown) Load(p []byte) (gen.Variables, error) {
 		return nil, err
 	}
 	v = cfm.FrontMatter
-	v[ContentIdent] = string(cfm.Content)
+	v[gen.ContentIdent] = string(cfm.Content)
 	return v, nil
 }
