@@ -85,7 +85,7 @@ func TestGenTree(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		tree := test.List.GenTree(test.List[test.Root].ToNode(test.Root, nil))
+		tree := test.List.GenTree(test.List[test.Root].ToNode(test.Root))
 		if !reflect.DeepEqual(tree, test.Tree) {
 			t.Errorf("want: \n%s\n but got: \n%s\n", spew.Sdump(test.Tree), spew.Sdump(tree))
 		} else {

@@ -34,7 +34,7 @@ func ResolveKey(list List, key string) (Variables, error) {
 	if err != nil {
 		return nil, ErrRootNotFound
 	}
-	tree := list.GenTree(v.ToNode(key, nil))
+	tree := list.GenTree(v.ToNode(key))
 	return tree.Reduce(), nil
 }
 

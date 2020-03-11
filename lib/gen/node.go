@@ -6,14 +6,12 @@ type Node struct {
 	Content Variables
 	Deps    []string
 
-	parent   *Node
 	children []*Node
 	resolved bool
 }
 
 // ToNode converts Variable to Node.
-// if node is root, then parent must be nil
-func (v Variables) ToNode(key string, parent *Node) *Node {
+func (v Variables) ToNode(key string) *Node {
 	return &Node{
 		Key:      key,
 		Content:  v,
@@ -25,7 +23,6 @@ func (v Variables) ToNode(key string, parent *Node) *Node {
 
 // resolve resolves 1 incremental depth for node.
 // resolve will changes node.children and node.resolved.
-// Each child have n as parent.
 func (n *Node) link(list List) {
 	// if already resolved, then no more resolve
 	if n.resolved {
@@ -40,7 +37,7 @@ func (n *Node) link(list List) {
 			continue
 		}
 
-		n.children = append(n.children, v.ToNode(dep, n))
+		n.children = append(n.children, v.ToNode(dep))
 	}
 	n.resolved = true
 }
