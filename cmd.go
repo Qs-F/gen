@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/Qs-F/gen/lib/gen"
+	"github.com/Qs-F/gen/lib/loader/markdown"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/sirupsen/logrus"
 )
@@ -14,13 +15,14 @@ func main() {
 		logrus.Error(err)
 		return
 	}
-	g := gen.New(wd, "")
-	list, err := g.List(NewMarkdownLoader())
+
+	list, err := gen.GenList(wd, markdown.New())
 	if err != nil {
 		logrus.Error(err)
 		return
 	}
-	v, err := g.ResolveKey(list, "testdata/md/basic.md")
+
+	v, err := gen.ResolveKey(list, "testdata/md/basic.md")
 	if err != nil {
 		logrus.Error(err)
 		return
