@@ -25,13 +25,11 @@ func TestGenList(t *testing.T) {
 
 			Output: gen.List{
 				"index.md": gen.Variables{
-					"title":   "Index Page",
-					"import":  []interface{}{"list.md"},
-					"Content": "\n# {{ .title }}\n\n## this article is for test\n\n{{ .committers.gopher }} wrote.\n",
+					"title":  "Index Page",
+					"import": []interface{}{"list.md"},
 				},
 				"list.md": gen.Variables{
 					"committers": map[string]interface{}{"gopher": "Gopher Google"},
-					"Content":    "",
 				},
 			},
 		},
