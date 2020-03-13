@@ -24,9 +24,24 @@ hello: Gopher
 `,
 			Variables: gen.Variables{
 				"hello": "Gopher",
-				"Content": `# test doc
+			},
+		},
+		{
+			Input: `---
+hello: Gopher
+gopher: Google
+list:
+- a
+- b
+- c
+---
+# test doc
 あいうえお😄
 `,
+			Variables: gen.Variables{
+				"hello":  "Gopher",
+				"gopher": "Google",
+				"list":   []interface{}{"a", "b", "c"},
 			},
 		},
 	}

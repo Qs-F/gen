@@ -25,12 +25,9 @@ func (_ *Markdown) Ext() string {
 
 // Load implements gen.Loader
 func (_ *Markdown) Load(p []byte) (gen.Variables, error) {
-	var v gen.Variables
 	cfm, err := pageparser.ParseFrontMatterAndContent(bytes.NewReader(p))
 	if err != nil {
 		return nil, err
 	}
-	v = cfm.FrontMatter
-	v[gen.ContentIdent] = string(cfm.Content)
-	return v, nil
+	return cfm.FrontMatter, nil
 }
