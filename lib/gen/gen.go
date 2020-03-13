@@ -26,27 +26,3 @@ func New(basePath string, layoutPath string) *Gen {
 		LayoutPath: layoutPath,
 	}
 }
-
-// func Expand(v Variables) (string, error) {
-// 	ti, ok := v[ContentIdent]
-// 	if !ok {
-// 		return "", ErrContentNotFound
-// 	}
-// 	t, ok := ti.(string)
-// 	if !ok {
-// 		return "", ErrContentNotFound
-// 	}
-//
-// 	tmpl, err := template.New("page").Parse(t)
-// 	if err != nil {
-// 		return "", err
-// 	}
-//
-// 	var buf bytes.Buffer
-// 	err = tmpl.Execute(&buf, v)
-// 	if err != nil {
-// 		return "", err
-// 	}
-//
-// 	return buf.String(), nil
-// }

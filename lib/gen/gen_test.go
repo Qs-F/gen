@@ -14,41 +14,6 @@ var (
 	base = filepath.Join("..", "..", "testdata")
 )
 
-// func TestExpand(t *testing.T) {
-// 	tests := []struct {
-// 		Variables gen.Variables
-//
-// 		Output string
-// 	}{
-// 		{
-// 			Variables: gen.Variables{
-// 				"Content": "Test: {{ .title }}",
-// 				"title":   "Title Expansion",
-// 			},
-// 			Output: "Test: Title Expansion",
-// 		},
-// 		{
-// 			Variables: gen.Variables{
-// 				"Content": "Test: {{ .title }}",
-// 			},
-// 			Output: "Test: ",
-// 		},
-// 	}
-//
-// 	for _, test := range tests {
-// 		str, err := gen.Expand(test.Variables)
-// 		if err != nil {
-// 			t.Error(err)
-// 			continue
-// 		}
-// 		if str != test.Output {
-// 			t.Errorf("want: \n%s\n but got: \n%s\n", test.Output, str)
-// 		} else {
-// 			t.Logf("got: \n%s\n", str)
-// 		}
-// 	}
-// }
-
 func TestUnit_GenList_ResolveKey(t *testing.T) {
 	tests := []struct {
 		Path    string
