@@ -22,7 +22,7 @@ func main() {
 		return
 	}
 
-	v, err := gen.ResolveKey(list, "testdata/md/basic.md")
+	v, err := gen.ResolveKey(list, "testdata/basic/md/basic.md")
 	if err != nil {
 		logrus.Error(err)
 		return
