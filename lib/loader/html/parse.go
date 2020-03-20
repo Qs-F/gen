@@ -4,6 +4,7 @@ package html
 import (
 	"bytes"
 	"errors"
+	"unicode"
 
 	"github.com/Qs-F/bort"
 	"github.com/Qs-F/gen/lib/gen"
@@ -17,11 +18,13 @@ var (
 )
 
 // HTML is struct of HTML Loader
-type HTML struct{}
+type HTML struct {
+	ContentKey string
+}
 
 // New returns new instance of HTML
-func New() *HTML {
-	return &HTML{}
+func New(countentKey string) *HTML {
+	return &HTML{ContentKey: countentKey}
 }
 
 // Ext implements gen.Loader
@@ -30,7 +33,7 @@ func (_ *HTML) Ext() string {
 }
 
 // Load implements gen.Loader
-func (_ *HTML) Load(p []byte) (gen.Variables, error) {
+func (h *HTML) Load(p []byte) (gen.Variables, error) {
 	b, err := bort.IsBin(bytes.NewReader(p))
 	if err != nil {
 		return nil, err
@@ -39,7 +42,12 @@ func (_ *HTML) Load(p []byte) (gen.Variables, error) {
 		return nil, ErrFileBinary
 	}
 
+	for _, v := range h.ContentKey {
+		if unicode.IsSpace(v) {
+			return nil, nil
+		}
+	}
 	v := make(gen.Variables)
-	v[gen.ContentIdent] = string(p)
+	v[h.ContentKey] = string(p)
 	return v, nil
 }
