@@ -24,14 +24,16 @@ var (
 
 // Gen is the struct for gen cmd
 type Gen struct {
-	BasePath   string
-	LayoutPath string
+	BasePath string
+	SrcPath  string
+	DstPath  string
 }
 
 // New returns new *Gen
-func New(basePath string, layoutPath string) *Gen {
+func New(basePath string, srcPath string, dstPath string) *Gen {
 	return &Gen{
-		BasePath:   basePath,
-		LayoutPath: layoutPath,
+		BasePath: basePath,
+		SrcPath:  srcPath,
+		DstPath:  dstPath,
 	}
 }
