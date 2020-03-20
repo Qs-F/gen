@@ -1,7 +1,10 @@
 // Package gen is the packeg of internal gen
 package gen
 
-import "path/filepath"
+import (
+	"path/filepath"
+	"strings"
+)
 
 // Variables is the type expressing front matters
 type Variables map[string]interface{}
@@ -44,14 +47,8 @@ func (gen *Gen) Set(basePath, srcPath, dstPath string) error {
 	if err != nil {
 		return err
 	}
-	src, err := filepath.Rel(base, srcAbs)
-	if err != nil {
-		return err
-	}
-	dst, err := filepath.Rel(base, dstAbs)
-	if err != nil {
-		return err
-	}
+	src := strings.TrimLeft(srcAbs, base)
+	dst := strings.TrimLeft(dstAbs, base)
 	gen.BasePath = base
 	gen.SrcPath = src
 	gen.DstPath = dst
