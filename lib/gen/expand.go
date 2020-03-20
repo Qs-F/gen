@@ -25,6 +25,7 @@ func (list List) Expand(basePath, srcPath, dstPath string, expanders ...Expander
 		if !strings.HasPrefix(file, srcPath) {
 			continue
 		}
+
 		// check expander is available for file
 		cont := false
 		var expander Expander
@@ -39,16 +40,19 @@ func (list List) Expand(basePath, srcPath, dstPath string, expanders ...Expander
 			continue
 		}
 
+		// get file content
 		content, perm, err := open(filepath.Join(basePath, srcPath, file))
 		if err != nil {
 			return err
 		}
 
+		// expand file
 		to, b, err := ExpandEach(list, expander, file, content)
 		if err != nil {
 			return err
 		}
 
+		// write
 		err = ioutil.WriteFile(filepath.Join(dst, to), b, perm)
 		if err != nil {
 			return err
