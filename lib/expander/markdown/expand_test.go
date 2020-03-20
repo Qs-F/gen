@@ -67,6 +67,13 @@ func TestExpand(t *testing.T) {
 			Variables: gen.Variables{},
 			MustFail:  true,
 		},
+		{
+			Content: []byte("Test: {{ .title }}"),
+			Variables: gen.Variables{
+				"title": "<span>Test</span>",
+			},
+			Output: []byte("<p>Test: <span>Test</span></p>\n"),
+		},
 	}
 
 	md := New()
