@@ -1,9 +1,7 @@
 // Package gen is the packeg of internal gen
 package gen
 
-import (
-	"errors"
-)
+import "path/filepath"
 
 // Variables is the type expressing front matters
 type Variables map[string]interface{}
@@ -17,23 +15,45 @@ func (vs Variables) Copy() Variables {
 	return ret
 }
 
-var (
-	// ErrContentNotFound is returned when Field 'Content' is not found in Variables
-	ErrContentNotFound = errors.New("Field 'Content' is not found in Variables")
-)
-
 // Gen is the struct for gen cmd
 type Gen struct {
-	BasePath string
-	SrcPath  string
-	DstPath  string
+	BasePath string // must be absolute
+	SrcPath  string // must be relative
+	DstPath  string // must be relative
 }
 
 // New returns new *Gen
-func New(basePath string, srcPath string, dstPath string) *Gen {
+func New(base, src, dst string) *Gen {
 	return &Gen{
-		BasePath: basePath,
-		SrcPath:  srcPath,
-		DstPath:  dstPath,
+		BasePath: base,
+		SrcPath:  src,
+		DstPath:  dst,
 	}
+}
+
+func (gen *Gen) Set(basePath, srcPath, dstPath string) error {
+	base, err := filepath.Abs(basePath)
+	if err != nil {
+		return err
+	}
+	srcAbs, err := filepath.Abs(srcPath)
+	if err != nil {
+		return err
+	}
+	dstAbs, err := filepath.Abs(dstPath)
+	if err != nil {
+		return err
+	}
+	src, err := filepath.Rel(base, srcAbs)
+	if err != nil {
+		return err
+	}
+	dst, err := filepath.Rel(base, dstAbs)
+	if err != nil {
+		return err
+	}
+	gen.BasePath = base
+	gen.SrcPath = src
+	gen.DstPath = dst
+	return nil
 }
