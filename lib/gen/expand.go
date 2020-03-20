@@ -12,14 +12,21 @@ type Expander interface {
 	Expand(p []byte, v Variables) ([]byte, error)
 }
 
-func (list List) Expand(basePath, srcPath, dstPath string, expanders ...Expander) error {
-	dst := filepath.Join(basePath, dstPath)
+type Out map[string]*File
+
+type File struct {
+	Content []byte
+	Perm    os.FileMode
+}
+
+func Expand(basePath, srcPath, dstPath string, list List, expanders ...Expander) (Out, error) {
 	exps := make(map[string]Expander)
 	for _, expander := range expanders {
 		from, _ := expander.Ext()
 		exps[from] = expander
 	}
 
+	ret := make(Out)
 	for file := range list {
 		// check file is in src
 		if !strings.HasPrefix(file, srcPath) {
@@ -43,23 +50,19 @@ func (list List) Expand(basePath, srcPath, dstPath string, expanders ...Expander
 		// get file content
 		content, perm, err := open(filepath.Join(basePath, srcPath, file))
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		// expand file
 		to, b, err := ExpandEach(list, expander, file, content)
 		if err != nil {
-			return err
+			return nil, err
 		}
 
-		// write
-		err = ioutil.WriteFile(filepath.Join(dst, to), b, perm)
-		if err != nil {
-			return err
-		}
+		ret[to] = &File{b, perm}
 	}
 
-	return nil
+	return ret, nil
 }
 
 func ExpandEach(list List, exp Expander, file string, content []byte) (dst string, w []byte, err error) {
@@ -76,6 +79,17 @@ func ExpandEach(list List, exp Expander, file string, content []byte) (dst strin
 	_, ext := exp.Ext()
 	dst = strings.TrimRight(file, filepath.Ext(file)) + ext
 	return dst, w, nil
+}
+
+func Write(basePath, dstPath string, out Out) error {
+	dst := filepath.Join(basePath, dstPath)
+	for to, file := range out {
+		err := ioutil.WriteFile(filepath.Join(dst, to), file.Content, file.Perm)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func open(path string) ([]byte, os.FileMode, error) {
