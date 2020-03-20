@@ -40,7 +40,13 @@ func main() {
 
 	mdExp := mde.New("layout", "content", "__content__", list)
 
-	err = list.Expand(g.BasePath, g.SrcPath, g.DstPath, mdExp)
+	out, err := gen.Expand(g.BasePath, g.SrcPath, g.DstPath, list, mdExp)
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+
+	err = gen.Write(g.BasePath, g.DstPath, out)
 	if err != nil {
 		logrus.Error(err)
 		return
