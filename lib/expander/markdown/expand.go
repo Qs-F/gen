@@ -4,6 +4,7 @@ package markdown
 import (
 	"bytes"
 	"text/template"
+	"unicode"
 
 	"github.com/Qs-F/gen/lib/gen"
 
@@ -12,29 +13,38 @@ import (
 
 const (
 	from = "md"
-	to   = "html"
+	to   = "phtml"
 )
 
 const (
 	noValueIdent = "<no value>"
 )
 
-type Markdown struct{}
+type Markdown struct {
+	ContentKey string
+}
 
-func New() *Markdown {
-	return &Markdown{}
+func New(key string) *Markdown {
+	return &Markdown{ContentKey: key}
 }
 
 func (_ *Markdown) Ext() (string, string) {
 	return from, to
 }
 
-func (_ *Markdown) Expand(p []byte, v gen.Variables) ([]byte, error) {
+func (m *Markdown) Expand(p []byte, v gen.Variables) ([]byte, error) {
 	b, err := text(p, v)
 	if err != nil {
 		return nil, err
 	}
-	return markdown(b), nil
+	c := markdown(b)
+	for _, r := range m.ContentKey {
+		if unicode.IsSpace(r) {
+			return c, nil
+		}
+	}
+	v[m.ContentKey] = string(c)
+	return c, nil
 }
 
 func text(p []byte, v gen.Variables) ([]byte, error) {
