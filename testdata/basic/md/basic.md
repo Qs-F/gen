@@ -9,3 +9,5 @@ lang: ja
 ## テストドキュメント
 
 Hoge Hoge ハローGopher
+
+{{ .Committers.Fumy }} の書いた記事

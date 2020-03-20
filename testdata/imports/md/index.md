@@ -1,7 +1,7 @@
 ---
 title: Index Page
 import: 
-- imports/md/list.md
+- list.md
 ---
 
 # {{ .title }}
