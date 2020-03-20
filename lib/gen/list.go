@@ -17,7 +17,7 @@ type Loader interface {
 	Load(p []byte) (Variables, error)
 }
 
-// List makes list from given directory.
+// GenList makes list from given directory.
 func GenList(basePath string, loaders ...Loader) (List, error) {
 	list := make(List)
 	err := filepath.Walk(basePath, func(path string, info os.FileInfo, err error) error {
