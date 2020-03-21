@@ -1,5 +1,7 @@
 # cmd `gen`
 
+![Gen logo](https://raw.githubusercontent.com/Qs-F/gen/dev/.github/logo/logo-unified.svg)
+
 cmd `gen` is a tool to output static htmls from markdown.
 
 ![Test](https://github.com/Qs-F/gen/workflows/test/badge.svg)
