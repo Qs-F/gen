@@ -58,8 +58,14 @@ func (gen *Gen) Set(basePath, srcPath, dstPath string) error {
 	if err != nil {
 		return err
 	}
-	src := strings.TrimPrefix(srcAbs, base+"/")
-	dst := strings.TrimPrefix(dstAbs, base+"/")
+	src, err := filepath.Rel(base, srcAbs)
+	if err != nil {
+		return err
+	}
+	dst, err := filepath.Rel(base, dstAbs)
+	if err != nil {
+		return err
+	}
 	gen.BasePath = base
 	gen.SrcPath = src
 	gen.DstPath = dst
