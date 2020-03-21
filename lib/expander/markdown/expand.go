@@ -53,13 +53,13 @@ func (_ *Markdown) Ext() (string, string) {
 
 // Expand implements gen.Expander
 func (m *Markdown) Expand(p []byte, v gen.Variables) ([]byte, error) {
-	file := p
 	cfm, err := pageparser.ParseFrontMatterAndContent(bytes.NewReader(p))
 	if err != nil {
 		return nil, err
 	}
-	if string(cfm.Content) != "" {
-		file = cfm.Content
+	file := cfm.Content
+	if string(cfm.Content) == "" && isEmptyMap(cfm.FrontMatter) {
+		file = p
 	}
 
 	b, err := text(file, v)
@@ -131,4 +131,14 @@ func text(p []byte, v gen.Variables) ([]byte, error) {
 
 func markdown(p []byte) []byte {
 	return bf.Run(p, bf.WithExtensions(bf.CommonExtensions))
+}
+
+func isEmptyMap(m map[string]interface{}) bool {
+	if m == nil {
+		return true
+	}
+	for _ = range m {
+		return false
+	}
+	return true
 }

@@ -59,6 +59,10 @@ func Expand(basePath, srcPath, dstPath string, list List, expanders ...Expander)
 			return nil, err
 		}
 
+		if len(b) < 1 {
+			continue
+		}
+
 		ret[to] = &File{b, perm}
 	}
 
