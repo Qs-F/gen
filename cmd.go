@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	mde "github.com/Qs-F/gen/lib/expander/markdown"
@@ -37,6 +38,7 @@ func main() {
 		logrus.Error(err)
 		return
 	}
+	fmt.Println(list)
 
 	mdExp := mde.New("layout", "content", "__content__", list)
 
@@ -45,8 +47,9 @@ func main() {
 		logrus.Error(err)
 		return
 	}
+	fmt.Println(out)
 
-	err = gen.Write(g.BasePath, g.DstPath, out)
+	err = gen.Write(g.BasePath, out)
 	if err != nil {
 		logrus.Error(err)
 		return
