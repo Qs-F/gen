@@ -4,6 +4,8 @@ package gen
 import (
 	"path/filepath"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 // Variables is the type expressing front matters
@@ -16,6 +18,15 @@ func (vs Variables) Copy() Variables {
 		ret[k] = v
 	}
 	return ret
+}
+
+// String implements fmt.Stringer
+func (vs Variables) String() string {
+	s := []string{}
+	for k := range vs {
+		s = append(s, k, "\n")
+	}
+	return strings.Join(s, "")
 }
 
 // Gen is the struct for gen cmd
@@ -47,10 +58,15 @@ func (gen *Gen) Set(basePath, srcPath, dstPath string) error {
 	if err != nil {
 		return err
 	}
-	src := strings.TrimLeft(srcAbs, base)
-	dst := strings.TrimLeft(dstAbs, base)
+	src := strings.TrimPrefix(srcAbs, base+"/")
+	dst := strings.TrimPrefix(dstAbs, base+"/")
 	gen.BasePath = base
 	gen.SrcPath = src
 	gen.DstPath = dst
+
+	logrus.Println("base: ", base)
+	logrus.Println("src: ", srcAbs)
+	logrus.Println("dst: ", dstAbs)
+
 	return nil
 }

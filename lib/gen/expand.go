@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 type Expander interface {
@@ -48,13 +50,13 @@ func Expand(basePath, srcPath, dstPath string, list List, expanders ...Expander)
 		}
 
 		// get file content
-		content, perm, err := open(filepath.Join(basePath, srcPath, file))
+		content, perm, err := open(filepath.Join(basePath, file))
 		if err != nil {
 			return nil, err
 		}
 
 		// expand file
-		to, b, err := ExpandEach(list, expander, file, content)
+		to, b, err := ExpandEach(list, expander, srcPath, dstPath, file, content)
 		if err != nil {
 			return nil, err
 		}
@@ -65,7 +67,7 @@ func Expand(basePath, srcPath, dstPath string, list List, expanders ...Expander)
 	return ret, nil
 }
 
-func ExpandEach(list List, exp Expander, file string, content []byte) (dst string, w []byte, err error) {
+func ExpandEach(list List, exp Expander, src string, dst string, file string, content []byte) (to string, w []byte, err error) {
 	v, err := ResolveKey(list, file)
 	if err != nil {
 		return "", nil, err
@@ -77,8 +79,9 @@ func ExpandEach(list List, exp Expander, file string, content []byte) (dst strin
 	}
 
 	_, ext := exp.Ext()
-	dst = strings.TrimRight(file, filepath.Ext(file)) + ext
-	return dst, w, nil
+	to = dst + strings.TrimLeft(strings.TrimRight(file, filepath.Ext(file))+ext, src)
+	logrus.Println(to)
+	return to, w, nil
 }
 
 func Write(basePath, dstPath string, out Out) error {
@@ -108,4 +111,13 @@ func open(path string) ([]byte, os.FileMode, error) {
 	}
 	f.Close()
 	return content, perm, nil
+}
+
+// String implements fmt.Stringer
+func (out Out) String() string {
+	s := []string{}
+	for k := range out {
+		s = append(s, k, "\n")
+	}
+	return strings.Join(s, "")
 }

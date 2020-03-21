@@ -4,11 +4,21 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // List is all Variable list.
 // map key is the key to access Variable
 type List map[string]Variables
+
+// String implements fmt.Stringer
+func (list List) String() string {
+	s := []string{}
+	for k := range list {
+		s = append(s, k, "\n")
+	}
+	return strings.Join(s, "")
+}
 
 // Loader is the interface that provides the way to get Variables from document.
 //
