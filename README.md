@@ -15,3 +15,24 @@ Variable resolve -> text/template expansion to markdown content -> blackfriday c
 - `import` directive
 
 in front matter, you can import other markdown
+
+## Installation
+
+```
+go get github.com/Qs-F/gen
+```
+
+## Usage
+
+```
+# Example - see _example directory
+gen -base _example/ -src _example/content -dst _example/dist
+```
+
+## License
+
+MIT License
+
+## Copyright
+
+Copyright 2020 de-liKeR / たふみ @CreatorQsF
