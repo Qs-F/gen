@@ -6,6 +6,10 @@ import (
 	"path/filepath"
 )
 
+// List is all Variable list.
+// map key is the key to access Variable
+type List map[string]Variables
+
 // Loader is the interface that provides the way to get Variables from document.
 //
 // Ext returns file extension, e.g. md, html.

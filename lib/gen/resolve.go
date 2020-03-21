@@ -18,10 +18,6 @@ var (
 	ErrVariableNotFound = errors.New("No such variable ident")
 )
 
-// List is all Variable list.
-// map key is the key to access Variable
-type List map[string]Variables
-
 // Resolve resolves th given list into Variables aling with the key "_"
 // Internally, this uses ResolveKey with key = Root
 func Resolve(list List) (Variables, error) {
