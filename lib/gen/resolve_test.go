@@ -53,7 +53,7 @@ func TestResolve(t *testing.T) {
 	}{
 		{
 			Input: map[string]Variables{
-				"_": Variables{
+				"_": {
 					"test": "Gopher OK",
 				},
 			},
@@ -63,13 +63,13 @@ func TestResolve(t *testing.T) {
 		},
 		{
 			Input: map[string]Variables{
-				"_": Variables{
+				"_": {
 					"import": []string{"A", "B"},
 				},
-				"A": Variables{
+				"A": {
 					"test": "Gopher A",
 				},
-				"B": Variables{
+				"B": {
 					"test": "Gopher B",
 				},
 			},
@@ -79,14 +79,14 @@ func TestResolve(t *testing.T) {
 		},
 		{
 			Input: map[string]Variables{
-				"_": Variables{
+				"_": {
 					"import": []string{"A", "B"},
 					"test":   "Gopher X",
 				},
-				"A": Variables{
+				"A": {
 					"test": "Gopher A",
 				},
-				"B": Variables{
+				"B": {
 					"test": "Gopher B",
 				},
 			},
