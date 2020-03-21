@@ -4,8 +4,6 @@ package gen
 import (
 	"path/filepath"
 	"strings"
-
-	"github.com/sirupsen/logrus"
 )
 
 // Variables is the type expressing front matters
@@ -69,10 +67,5 @@ func (gen *Gen) Set(basePath, srcPath, dstPath string) error {
 	gen.BasePath = base
 	gen.SrcPath = src
 	gen.DstPath = dst
-
-	logrus.Println("base: ", base)
-	logrus.Println("src: ", srcAbs)
-	logrus.Println("dst: ", dstAbs)
-
 	return nil
 }

@@ -5,8 +5,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/sirupsen/logrus"
 )
 
 type Expander interface {
@@ -80,7 +78,6 @@ func ExpandEach(list List, exp Expander, src string, dst string, file string, co
 
 	_, ext := exp.Ext()
 	to = dst + strings.TrimLeft(strings.TrimRight(file, filepath.Ext(file))+ext, src)
-	logrus.Println(to)
 	return to, w, nil
 }
 
