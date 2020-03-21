@@ -7,6 +7,7 @@ import (
 	"text/template"
 
 	"github.com/Qs-F/gen/lib/gen"
+	"github.com/gohugoio/hugo/parser/pageparser"
 
 	bf "github.com/russross/blackfriday/v2"
 )
@@ -52,7 +53,16 @@ func (_ *Markdown) Ext() (string, string) {
 
 // Expand implements gen.Expander
 func (m *Markdown) Expand(p []byte, v gen.Variables) ([]byte, error) {
-	b, err := text(p, v)
+	file := p
+	cfm, err := pageparser.ParseFrontMatterAndContent(bytes.NewReader(p))
+	if err != nil {
+		return nil, err
+	}
+	if string(cfm.Content) != "" {
+		file = cfm.Content
+	}
+
+	b, err := text(file, v)
 	if err != nil {
 		return nil, err
 	}
