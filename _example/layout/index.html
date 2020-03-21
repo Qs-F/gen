@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ .title }}</title>
+</head>
+<body>
+  <header>
+    <h1>{{ .title }}</h1>
+  </header>
+  <article>
+    {{ .__content__ }}
+  </article>
+  <footer>
+    <p>Written by {{ .author }}</p>
+  </footer>
+</body>
+</html>
