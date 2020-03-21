@@ -84,10 +84,14 @@ func ExpandEach(list List, exp Expander, src string, dst string, file string, co
 	return to, w, nil
 }
 
-func Write(basePath, dstPath string, out Out) error {
-	dst := filepath.Join(basePath, dstPath)
+func Write(basePath string, out Out) error {
 	for to, file := range out {
-		err := ioutil.WriteFile(filepath.Join(dst, to), file.Content, file.Perm)
+		target := filepath.Join(basePath, to)
+		err := os.MkdirAll(filepath.Dir(target), 0700)
+		if err != nil {
+			return err
+		}
+		err = ioutil.WriteFile(target, file.Content, file.Perm)
 		if err != nil {
 			return err
 		}
