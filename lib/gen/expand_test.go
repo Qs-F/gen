@@ -66,7 +66,7 @@ func Test_expand(t *testing.T) {
 	for _, test := range tests {
 		test.Expander = markdown.New("layout", "content", "__content__", test.List)
 
-		dst, w, err := gen.ExpandEach(test.List, test.Expander, test.File, test.Content)
+		dst, w, err := gen.ExpandEach(test.List, test.Expander, "", "", test.File, test.Content)
 		if err != nil {
 			t.Error(err)
 		}
