@@ -1,6 +1,6 @@
 # cmd `gen`
 
-![Gen logo](https://raw.githubusercontent.com/Qs-F/gen/dev/.github/logo/logo-unified.svg)
+![Gen logo](.github/logo/logo-unified.svg)
 
 cmd `gen` is a tool to output static htmls from markdown.
 
