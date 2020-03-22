@@ -21,6 +21,8 @@ func main() {
 	base := flag.String("base", wd, "base path")
 	src := flag.String("src", wd, "src path")
 	dst := flag.String("dst", wd, "dst path")
+	w := flag.Bool("w", false, "write out")
+	info := flag.Bool("i", false, "show info")
 	flag.Parse()
 
 	g := gen.New("", "", "")
@@ -38,7 +40,10 @@ func main() {
 		logrus.Error(err)
 		return
 	}
-	fmt.Println(list)
+	if *info {
+		fmt.Fprintf(os.Stderr, ">>> Project file list\n")
+		fmt.Println(list)
+	}
 
 	mdExp := mde.New("layout", "content", "__content__", list)
 
@@ -47,8 +52,14 @@ func main() {
 		logrus.Error(err)
 		return
 	}
-	fmt.Println(out)
+	if *info {
+		fmt.Fprintf(os.Stderr, ">>> Files outputed\n")
+		fmt.Println(out)
+	}
 
+	if !*w {
+		return
+	}
 	err = gen.Write(g.BasePath, out)
 	if err != nil {
 		logrus.Error(err)
