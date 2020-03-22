@@ -97,45 +97,11 @@ func (m *Markdown) Expand(p []byte, v gen.Variables) ([]byte, error) {
 }
 
 func html(page string, v gen.Variables) ([]byte, error) {
-	var buf bytes.Buffer
-	ret := page
-	for {
-		tmpl, err := template.New("page").Parse(ret)
-		if err != nil {
-			return nil, err
-		}
-
-		tmpl = tmpl.Option("missingkey=error")
-
-		buf.Reset()
-		err = tmpl.Execute(&buf, v)
-		if err != nil {
-			return nil, err
-		}
-		if ret == buf.String() {
-			break
-		}
-		ret = buf.String()
-	}
-
-	return []byte(ret), nil
+	return recurrentExecute([]byte(page), v)
 }
 
 func text(p []byte, v gen.Variables) ([]byte, error) {
-	tmpl, err := template.New("page").Parse(string(p))
-	if err != nil {
-		return nil, err
-	}
-
-	tmpl = tmpl.Option("missingkey=error")
-
-	var buf bytes.Buffer
-	err = tmpl.Execute(&buf, v)
-	if err != nil {
-		return nil, err
-	}
-
-	return buf.Bytes(), nil
+	return recurrentExecute(p, v)
 }
 
 func markdown(p []byte) []byte {
@@ -150,4 +116,28 @@ func isEmptyMap(m map[string]interface{}) bool {
 		return false
 	}
 	return true
+}
+
+func recurrentExecute(content []byte, v gen.Variables) ([]byte, error) {
+	var buf bytes.Buffer
+	page := string(content)
+	for {
+		tmpl, err := template.New("page").Parse(page)
+		if err != nil {
+			return nil, err
+		}
+
+		tmpl = tmpl.Option("missingkey=error")
+
+		buf.Reset()
+		err = tmpl.Execute(&buf, v)
+		if err != nil {
+			return nil, err
+		}
+		if page == buf.String() {
+			break
+		}
+		page = buf.String()
+	}
+	return buf.Bytes(), nil
 }
