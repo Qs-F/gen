@@ -7,6 +7,43 @@ import (
 	"github.com/Qs-F/gen/lib/gen"
 )
 
+func Test_html(t *testing.T) {
+	tests := []struct {
+		Page      string
+		Variables gen.Variables
+
+		Output []byte
+	}{
+		{
+			Page: `<p>{{ .name }}</p>`,
+			Variables: gen.Variables{
+				"name": "gopher",
+			},
+			Output: []byte(`<p>gopher</p>`),
+		},
+		{
+			Page: `<p>{{ .recurrent }}</p>`,
+			Variables: gen.Variables{
+				"recurrent": "{{ .name }}",
+				"name":      "gopher",
+			},
+			Output: []byte(`<p>gopher</p>`),
+		},
+	}
+
+	for _, test := range tests {
+		b, err := html(test.Page, test.Variables)
+		if err != nil {
+			t.Error(err)
+		}
+		if !bytes.Equal(b, test.Output) {
+			t.Errorf("want: \n%s\n but got: \n%s\n", string(test.Output), string(b))
+		} else {
+			t.Logf("got: \n%s\n", string(b))
+		}
+	}
+}
+
 func Test_text(t *testing.T) {
 	tests := []struct {
 		Content   []byte

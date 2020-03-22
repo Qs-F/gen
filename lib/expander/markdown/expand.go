@@ -22,10 +22,11 @@ const (
 )
 
 var (
+	// ErrLayoutFileNotFound is retunred when layout file is not found in list
 	ErrLayoutFileNotFound = errors.New("No such layout file is found")
 )
 
-// Makrdown satisfies gen.Expander
+// Markdown satisfies gen.Expander
 type Markdown struct {
 	LayoutKey  string
 	HTMLKey    string
@@ -96,20 +97,28 @@ func (m *Markdown) Expand(p []byte, v gen.Variables) ([]byte, error) {
 }
 
 func html(page string, v gen.Variables) ([]byte, error) {
-	tmpl, err := template.New("page").Parse(page)
-	if err != nil {
-		return nil, err
-	}
-
-	tmpl = tmpl.Option("missingkey=error")
-
 	var buf bytes.Buffer
-	err = tmpl.Execute(&buf, v)
-	if err != nil {
-		return nil, err
+	ret := page
+	for {
+		tmpl, err := template.New("page").Parse(ret)
+		if err != nil {
+			return nil, err
+		}
+
+		tmpl = tmpl.Option("missingkey=error")
+
+		buf.Reset()
+		err = tmpl.Execute(&buf, v)
+		if err != nil {
+			return nil, err
+		}
+		if ret == buf.String() {
+			break
+		}
+		ret = buf.String()
 	}
 
-	return buf.Bytes(), nil
+	return []byte(ret), nil
 }
 
 func text(p []byte, v gen.Variables) ([]byte, error) {
