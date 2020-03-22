@@ -14,9 +14,64 @@ Variable resolve -> text/template expansion to markdown content -> blackfriday c
 
 ## Default values
 
-- `import` directive
+### `import` directive
 
-in front matter, you can import other markdown
+in front matter, you can import other markdown.
+
+```markdown
+---
+import:
+- content/a.md
+---
+```
+
+Likewise, write the path to the file from **base** path **without** first slash.
+
+`import` is useful, like you can import with namespace. For more cases, please see `_example/*/content` directory.
+
+```markdown
+---
+named: 
+  import:
+  - content/a.md
+---
+
+you can access with {{ .named.hogehoge }} in a.md.
+```
+
+### `layout` directive
+
+layout is **optional**. If you want to output whole html with embedded markdown content in html file, this helps.
+
+```markdown
+---
+title: hello
+layout: layout/index.html
+---
+
+## Hoge page
+
+This is new page.
+```
+
+write the path of layout file from `base` without slash in `layout`.
+
+And in layout file, you have to write special variable `{{ .__content__ }}` to show markdown content.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ .title }}</title>
+</head>
+<body>
+  <article>
+    {{ .__content }}
+  </article>
+</body>
+</html>
+```
 
 ## Installation
 
