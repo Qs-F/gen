@@ -30,6 +30,17 @@ func ResolveKey(list List, key string) (Variables, error) {
 	if err != nil {
 		return nil, ErrRootNotFound
 	}
+
+	// recurrent import
+	for k, val := range v {
+		value, _ := val.(Variables) // since Variables is recurrent system, it must be always ok
+		if !value.ContainsImports() {
+			continue
+		}
+		// found named import
+		v[k] = list.GenTree(value.ToNode("")).Reduce()
+	}
+
 	tree := list.GenTree(v.ToNode(key))
 	return tree.Reduce(), nil
 }
