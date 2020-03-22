@@ -33,14 +33,22 @@ func ResolveKey(list List, key string) (Variables, error) {
 
 	// recurrent import
 	for k, val := range v {
-		value, _ := val.(Variables) // since Variables is recurrent system, it must be always ok
+		var value Variables
+		switch m := val.(type) {
+		case map[string]interface{}:
+			value = MapToVariables(m)
+		case Variables:
+			value = m
+		default:
+			continue
+		}
 		if !value.ContainsImports() {
 			continue
 		}
 		// found named import
 		v[k] = list.GenTree(value.ToNode("")).Reduce()
 	}
-
+	list[key] = v
 	tree := list.GenTree(v.ToNode(key))
 	return tree.Reduce(), nil
 }
