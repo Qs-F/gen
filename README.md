@@ -67,7 +67,7 @@ And in layout file, you have to write special variable `{{ .__content__ }}` to s
 </head>
 <body>
   <article>
-    {{ .__content }}
+    {{ .__content__ }}
   </article>
 </body>
 </html>
