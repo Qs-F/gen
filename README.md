@@ -12,7 +12,20 @@ cmd `gen` is a tool to output static htmls from markdown.
 
 Variable resolve -> text/template expansion to markdown content -> blackfriday convert (-> html/template if needed)
 
-## Default values
+## Installation
+
+```
+go get github.com/Qs-F/gen
+```
+
+## Usage
+
+```
+# Example - see _example directory
+gen -base _example/ -src _example/content -dst _example/dist
+```
+
+## Features
 
 ### `import` directive
 
@@ -73,18 +86,62 @@ And in layout file, you have to write special variable `{{ .__content__ }}` to s
 </html>
 ```
 
-## Installation
+### embedded value
 
-```
-go get github.com/Qs-F/gen
+in your markdown file, you can even write following:
+
+```markdown
+---
+field1: "{{ .field2 }} is the best"
+field2: golang
+---
+
+{{ field1 }}
 ```
 
-## Usage
+This will be formed out as
 
+```html 
+<p>golang is the best</p>
 ```
-# Example - see _example directory
-gen -base _example/ -src _example/content -dst _example/dist
+
+more complex example:
+
+`content/a.md`
+
+```markdown
+---
+who: "{{ .name }}"
+name: "{{ .b.name }}"
+b:
+  import:
+  - content/b.md
+display: "{{ .who }} wrote this file"
+---
+
+{{ .display }}
 ```
+
+`content/b.md`
+
+```markdown
+---
+name: たふみ
+---
+```
+
+then
+
+`dist/a.html`
+
+```html
+<p>たふみ wrote this file</p>
+```
+
+Note:
+
+- You **CANNOT** use variable for the yaml key. e.g. `{{ .key }}: hello` is invalid.
+- No DFS implmented, so cyclic import can cause undefined behavior.
 
 ## License
 
