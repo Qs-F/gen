@@ -94,6 +94,32 @@ func TestResolve(t *testing.T) {
 				"test": "Gopher X",
 			},
 		},
+		// recurrent named imports
+		{
+			Input: map[string]Variables{
+				"_": {
+					"import": []string{"A", "B"},
+					"test":   "Gopher X",
+					"named": Variables{
+						"import":         []string{"A", "B"},
+						"notoverwritten": "not",
+					},
+				},
+				"A": {
+					"test": "Gopher A",
+				},
+				"B": {
+					"test": "Gopher B",
+				},
+			},
+			Output: Variables{
+				"test": "Gopher X",
+				"named": Variables{
+					"test":           "Gopher A",
+					"notoverwritten": "not",
+				},
+			},
+		},
 	}
 
 	for _, test := range tests {
