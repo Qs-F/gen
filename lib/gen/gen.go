@@ -27,6 +27,17 @@ func (vs Variables) String() string {
 	return strings.Join(s, "")
 }
 
+func MapToVariables(m map[string]interface{}) Variables {
+	if m == nil {
+		return nil
+	}
+	ret := make(Variables)
+	for k, v := range m {
+		ret[k] = v
+	}
+	return ret
+}
+
 // Gen is the struct for gen cmd
 type Gen struct {
 	BasePath string // must be absolute
