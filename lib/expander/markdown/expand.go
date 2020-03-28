@@ -6,6 +6,7 @@ import (
 	"errors"
 	"text/template"
 
+	"github.com/Masterminds/sprig"
 	"github.com/Qs-F/gen/lib/gen"
 	"github.com/gohugoio/hugo/parser/pageparser"
 
@@ -122,7 +123,7 @@ func recurrentExecute(content []byte, v gen.Variables) ([]byte, error) {
 	var buf bytes.Buffer
 	page := string(content)
 	for {
-		tmpl, err := template.New("page").Parse(page)
+		tmpl, err := template.New("page").Funcs(sprig.TxtFuncMap()).Parse(page)
 		if err != nil {
 			return nil, err
 		}
