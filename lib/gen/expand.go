@@ -81,7 +81,9 @@ func ExpandEach(list List, exp Expander, src string, dst string, file string, co
 	}
 
 	_, ext := exp.Ext()
-	to = filepath.Join(dst, strings.TrimLeft(strings.TrimRight(file, filepath.Ext(file))+ext, src))
+	// name := filepath.Base(file)
+	// prevExt := filepath.Ext(file)
+	to = filepath.Join(dst, strings.TrimPrefix(strings.TrimSuffix(file, filepath.Ext(file))+ext, src))
 	return to, w, nil
 }
 
