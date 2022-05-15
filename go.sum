@@ -48,6 +48,8 @@ github.com/PuerkitoBio/purell v1.1.1/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbt
 github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=
 github.com/Qs-F/bort v0.0.0-20191010151037-c9b0d14185e5 h1:+hjCSqPAiU+l7+1Wty1PhSWG2h6jKKV5hgOr8LVJ2ow=
 github.com/Qs-F/bort v0.0.0-20191010151037-c9b0d14185e5/go.mod h1:pD2UuqcenN2USwXTsn7mXmojHeCvjDsq7L56c5F+Log=
+github.com/Qs-F/bort v1.0.0 h1:q72PTJW0z9cddJsuJvM0qqUNsb3N9VAd1D1PEiwE9ls=
+github.com/Qs-F/bort v1.0.0/go.mod h1:iUFY0vnUx1awavDHgww/n6J8+NosHo2Q5mcGPB9aqmg=
 github.com/Shopify/sarama v1.19.0/go.mod h1:FVkBWblsNy7DGZRfXLU0O9RCGt5g3g3yEuWXgklEdEo=
 github.com/Shopify/toxiproxy v2.1.4+incompatible/go.mod h1:OXgGpZ6Cli1/URJOF1DMxUHB2q5Ap20/P/eIdh4G0pI=
 github.com/akavel/rsrc v0.8.0/go.mod h1:uLoCtb9J+EyAqh+26kdrTgmzRBFPGOolLWKpdxkKq+c=
