@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/semver v1.5.0 // indirect
-	github.com/Masterminds/sprig v2.22.0+incompatible
+	github.com/Masterminds/sprig/v3 v3.2.2
 	github.com/Masterminds/sprig/v3 v3.2.2
 	github.com/Qs-F/bort v1.0.0
 	github.com/davecgh/go-spew v1.1.1
