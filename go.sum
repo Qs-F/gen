@@ -86,6 +86,8 @@ github.com/gohugoio/hugo v0.103.1 h1:W1G91+p+Z/L+1Hy5vt7Us5mgkKgGAAgcRCqA+ffwQjM
 github.com/gohugoio/hugo v0.103.1/go.mod h1:bfSj74FB6/ooTzhRXH4UXqDzf2wl/qHlOpMUV99N2+s=
 github.com/gohugoio/hugo v0.104.0 h1:dkvcxpcO9dceA64jjpl27ROKLzOZnZk9WvD0N/xmcsk=
 github.com/gohugoio/hugo v0.104.0/go.mod h1:8iVWX7s/T7lbNtBWFdwBnn8XfbOfBJ9zWVrskeMWyiU=
+github.com/gohugoio/hugo v0.104.2 h1:IdLcaRMfAQv9wGz8Qw9ARmOkvL3W77K/DOp2DaUYYTw=
+github.com/gohugoio/hugo v0.104.2/go.mod h1:8iVWX7s/T7lbNtBWFdwBnn8XfbOfBJ9zWVrskeMWyiU=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/groupcache v0.0.0-20190702054246-869f871628b6/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
 github.com/golang/groupcache v0.0.0-20191227052852-215e87163ea7/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=

@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/sprig v2.22.0+incompatible
 	github.com/Qs-F/bort v1.0.0
 	github.com/davecgh/go-spew v1.1.1
-	github.com/gohugoio/hugo v0.104.0
+	github.com/gohugoio/hugo v0.104.2
 	github.com/russross/blackfriday/v2 v2.1.0
 	github.com/sirupsen/logrus v1.9.0
 )
