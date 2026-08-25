@@ -1,6 +1,6 @@
 module github.com/Qs-F/gen
 
-go 1.19
+go 1.23
 
 require (
 	github.com/Masterminds/sprig v2.22.0+incompatible
@@ -8,7 +8,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1
 	github.com/gohugoio/hugo v0.109.0
 	github.com/russross/blackfriday/v2 v2.1.0
-	github.com/sirupsen/logrus v1.9.3
+	github.com/sirupsen/logrus v1.10.2
 )
 
 require (
@@ -35,7 +35,7 @@ require (
 	github.com/yuin/goldmark v1.5.3 // indirect
 	golang.org/x/crypto v0.1.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
-	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
